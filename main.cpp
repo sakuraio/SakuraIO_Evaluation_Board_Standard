@@ -198,19 +198,15 @@ void loop()
                     gps_decoder.get_year(), gps_decoder.get_month(), gps_decoder.get_day(),
                     gps_decoder.get_hour(), gps_decoder.get_min(), gps_decoder.get_sec());
             pc.printf("\tUNIX time: %d\r\n", gps_decoder.get_unixtime());
-            if ((sakuraio.getConnectionStatus() & 0x80) == 0x80) {
-                led_2 = 1;
-                pc.printf("Send:%d\r\n", cnt_send);
-                lcd.setCursor(0, 1);
-                lcd.printf("%d", cnt_send);
-                enqueue_sensor_data(cnt_send);
-                sakuraio.send();
-                cnt_send++;
-                led_2 = 0;
-                pc.printf("After %d sec to send.\r\n", (int)(SEND_INTERVAL_TICKS_PAR_COUNT * 0.2));
-            } else {
-                return;
-            }
+            led_2 = 1;
+            pc.printf("Send:%d\r\n", cnt_send);
+            lcd.setCursor(0, 1);
+            lcd.printf("%d", cnt_send);
+            enqueue_sensor_data(cnt_send);
+            sakuraio.send();
+            cnt_send++;
+            led_2 = 0;
+            pc.printf("After %d sec to send.\r\n", (int)(SEND_INTERVAL_TICKS_PAR_COUNT * 0.2));
         }
     }
     led_1 = !led_1;
